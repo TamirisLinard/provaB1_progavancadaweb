@@ -1,1 +1,61 @@
+// src/models/user.ts
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/database';
+
+class User extends Model {
+  public id!: number;
+  public name!: string;
+  public email!: string;
+  public password!: string; // Corrigido para "password"
+  public profile_image?: string;
+  public bio?: string;
+  public created_at!: Date;
+  public updated_at!: Date;
+}
+
+User.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    profile_image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    bio: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize,
+    tableName: 'users',
+    timestamps: false,
+  }
+);
+
+export default User;
 
