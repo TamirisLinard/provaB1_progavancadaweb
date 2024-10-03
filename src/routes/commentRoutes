@@ -1,1 +1,13 @@
+// src/routes/commentRoutes.ts
+import { Router } from 'express';
+import { createComment, getComments, getCommentById, getCommentsByPostId } from '../controllers/commentController';
+
+const router = Router();
+
+router.post('/comments', createComment);
+router.get('/comments', getComments);
+router.get('/comments/:id', getCommentById);
+router.get('/posts/:postId/comments', getCommentsByPostId); // Obter comentários por post_id
+
+export default router;
 
