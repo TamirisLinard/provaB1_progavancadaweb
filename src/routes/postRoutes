@@ -1,1 +1,13 @@
+// src/routes/postRoutes.ts
+import { Router } from 'express';
+import { createPost, getPosts, getPostById, getPostsByUserId } from '../controllers/postController';
+
+const router = Router();
+
+router.post('/posts', createPost);
+router.get('/posts', getPosts);
+router.get('/posts/:id', getPostById);
+router.get('/users/:userId/posts', getPostsByUserId); // Obter posts por user_id
+
+export default router;
 
