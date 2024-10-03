@@ -1,1 +1,61 @@
+// src/models/comment.ts
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/database';
+import Post from './post'; // Importando o modelo Post
+import User from './user'; // Importando o modelo User
+
+class Comment extends Model {
+  public id!: number;
+  public post_id!: number;
+  public user_id!: number;
+  public content!: string;
+  public created_at!: Date;
+}
+
+Comment.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Post,
+        key: 'id',
+      },
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: 'id',
+      },
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize,
+    tableName: 'comments',
+    timestamps: false,
+  }
+);
+
+// Definindo os relacionamentos
+Post.hasMany(Comment, { foreignKey: 'post_id' });
+User.hasMany(Comment, { foreignKey: 'user_id' });
+Comment.belongsTo(Post, { foreignKey: 'post_id' });
+Comment.belongsTo(User, { foreignKey: 'user_id' });
+
+export default Comment;
 
